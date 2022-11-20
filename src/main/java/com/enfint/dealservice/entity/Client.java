@@ -8,9 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -22,6 +20,10 @@ import java.time.LocalDate;
 @Table(name = "clients")
 public class Client {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -31,7 +33,7 @@ public class Client {
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "birth_dae")
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     private String email;
