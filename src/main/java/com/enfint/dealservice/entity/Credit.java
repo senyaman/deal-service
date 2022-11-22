@@ -2,9 +2,13 @@ package com.enfint.dealservice.entity;
 
 import com.enfint.dealservice.dto.PaymentScheduleElement;
 import com.enfint.dealservice.utils.CreditStatusEnum;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,9 +17,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "credits")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Credit {
 
     @Id
@@ -32,6 +38,7 @@ public class Credit {
     private BigDecimal flc;
 
     @Column(name = "payment_schedule")
+    @Type(type = "jsonb")
     private List<PaymentScheduleElement> paymentSchedule;
 
     @Column(name = "is_insurance_enabled")
@@ -42,4 +49,12 @@ public class Credit {
 
     @Column(name = "credit_status")
     private CreditStatusEnum creditStatus;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "application_id", referencedColumnName = "id")
+    private Application application;
 }

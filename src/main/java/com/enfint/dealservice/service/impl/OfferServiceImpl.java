@@ -1,0 +1,50 @@
+package com.enfint.dealservice.service.impl;
+
+import com.enfint.dealservice.dto.ApplicationStatusHistoryDTO;
+import com.enfint.dealservice.dto.LoanOfferDTO;
+import com.enfint.dealservice.entity.Application;
+import com.enfint.dealservice.exception.ApplicationNotFoundException;
+import com.enfint.dealservice.repository.ApplicationRepository;
+import com.enfint.dealservice.service.OfferService;
+import com.enfint.dealservice.utils.ApplicationStatusEnum;
+import com.enfint.dealservice.utils.ChangeTypeEnum;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class OfferServiceImpl implements OfferService {
+
+    private final ApplicationRepository applicationRepository;
+
+    @Override
+    public void updateOffer(LoanOfferDTO loanOffer) {
+
+        Application application;
+
+        if(loanOffer.getApplicationId() != null) {
+            application = applicationRepository.getReferenceById(loanOffer.getApplicationId());
+        } else {
+            throw new ApplicationNotFoundException("Could not find application");
+        }
+        
+        application.setStatusHistory(
+                List.of(
+                    ApplicationStatusHistoryDTO
+                            .builder()
+                            .time(LocalDateTime.now())
+                            .applicationStatus(ApplicationStatusEnum.APPROVED)
+                            .changeType(ChangeTypeEnum.MANUAL)
+                            .build()
+                )
+        );
+
+        application.setAppliedOffer(loanOffer);
+
+        applicationRepository.save(application);
+
+    }
+}

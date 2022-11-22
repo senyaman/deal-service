@@ -4,9 +4,13 @@ import com.enfint.dealservice.dto.EmploymentDTO;
 import com.enfint.dealservice.utils.GenderEnum;
 import com.enfint.dealservice.utils.MaritalStatusEnum;
 import com.enfint.dealservice.utils.PositionEnum;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,9 +19,11 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "clients")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Client {
 
     @Id
@@ -58,6 +64,7 @@ public class Client {
     @Column(name = "issue_brand")
     private String issueBranch;
 
+    @Type(type = "jsonb")
     private EmploymentDTO employment;
 
     private String employer;
@@ -71,5 +78,14 @@ public class Client {
 
     @Column(name = "work_experience_current")
     private Integer workExperienceCurrent;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "application_id", referencedColumnName = "id")
+    private Application application;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "credit_id", referencedColumnName = "id")
+    private Credit credit;
+
     private String account;
 }
