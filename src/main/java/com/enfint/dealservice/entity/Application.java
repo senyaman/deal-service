@@ -43,7 +43,7 @@ public class Application {
     private LocalDate creationDate;
 
     @Column(name = "applied_offer")
-    @Type(type = "jsonb")
+    @Type(type="jsonb")
     private LoanOfferDTO appliedOffer;
 
     @Column(name = "sign_date")
@@ -53,6 +53,6 @@ public class Application {
     private Integer sesCode;
 
     @Column(name = "status_history")
-    @Type(type = "jsonb")
+    @Type(type="jsonb")
     private List<ApplicationStatusHistoryDTO> statusHistory;
 }

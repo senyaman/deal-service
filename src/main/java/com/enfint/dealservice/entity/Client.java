@@ -64,7 +64,7 @@ public class Client {
     @Column(name = "issue_brand")
     private String issueBranch;
 
-    @Type(type = "jsonb")
+    @Type(type="jsonb")
     private EmploymentDTO employment;
 
     private String employer;

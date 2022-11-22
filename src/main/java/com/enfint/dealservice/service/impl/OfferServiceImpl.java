@@ -7,11 +7,9 @@ import com.enfint.dealservice.exception.ApplicationNotFoundException;
 import com.enfint.dealservice.repository.ApplicationRepository;
 import com.enfint.dealservice.service.OfferService;
 import com.enfint.dealservice.utils.ApplicationStatusEnum;
-import com.enfint.dealservice.utils.ChangeTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,17 +28,12 @@ public class OfferServiceImpl implements OfferService {
         } else {
             throw new ApplicationNotFoundException("Could not find application");
         }
-        
-        application.setStatusHistory(
-                List.of(
-                    ApplicationStatusHistoryDTO
-                            .builder()
-                            .time(LocalDateTime.now())
-                            .applicationStatus(ApplicationStatusEnum.APPROVED)
-                            .changeType(ChangeTypeEnum.MANUAL)
-                            .build()
-                )
-        );
+
+        application.setStatusHistory(List.of(
+                ApplicationStatusHistoryDTO.builder()
+                        .applicationStatus(ApplicationStatusEnum.APPROVED)
+                        .build()
+        ));
 
         application.setAppliedOffer(loanOffer);
 

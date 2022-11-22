@@ -3,6 +3,7 @@ package com.enfint.dealservice.dto;
 import com.enfint.dealservice.utils.GenderEnum;
 import com.enfint.dealservice.utils.MaritalStatusEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ScoringDataDTO {
     private BigDecimal amount;
     private Integer term;

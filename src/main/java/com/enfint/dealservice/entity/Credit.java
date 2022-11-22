@@ -35,10 +35,10 @@ public class Credit {
     private BigDecimal monthlyPayment;
 
     private BigDecimal rate;
-    private BigDecimal flc;
+    private BigDecimal psk;
 
     @Column(name = "payment_schedule")
-    @Type(type = "jsonb")
+    @Type(type="jsonb")
     private List<PaymentScheduleElement> paymentSchedule;
 
     @Column(name = "is_insurance_enabled")
