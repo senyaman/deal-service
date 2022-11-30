@@ -44,9 +44,11 @@ public class Client {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
     @Column(name = "marital_status")
+    @Enumerated(EnumType.STRING)
     private MaritalStatusEnum maritalStatus;
 
     @Column(name = "dependent_number")
@@ -61,16 +63,18 @@ public class Client {
     @Column(name = "issue_date")
     private LocalDate issueDate;
 
-    @Column(name = "issue_brand")
+    @Column(name = "issue_branch")
     private String issueBranch;
 
     @Type(type="jsonb")
+    @Column(columnDefinition = "jsonb")
     private EmploymentDTO employment;
 
     private String employer;
 
     private BigDecimal salary;
 
+    @Enumerated(EnumType.STRING)
     private PositionEnum position;
 
     @Column(name = "work_experience_total")

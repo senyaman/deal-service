@@ -42,7 +42,7 @@ public class Application {
     @Column(name = "creation_date")
     private LocalDate creationDate;
 
-    @Column(name = "applied_offer")
+    @Column(name = "applied_offer", columnDefinition = "jsonb")
     @Type(type="jsonb")
     private LoanOfferDTO appliedOffer;
 
@@ -52,7 +52,7 @@ public class Application {
     @Column(name = "ses_code")
     private Integer sesCode;
 
-    @Column(name = "status_history")
+    @Column(name = "status_history", columnDefinition = "jsonb")
     @Type(type="jsonb")
     private List<ApplicationStatusHistoryDTO> statusHistory;
 }

@@ -9,6 +9,7 @@ import com.enfint.dealservice.repository.ApplicationRepository;
 import com.enfint.dealservice.repository.ClientRepository;
 import com.enfint.dealservice.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
@@ -25,6 +27,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<LoanOfferDTO> loanApplication(LoanApplicationRequestDTO loanApplicationRequest) {
+
+        log.info("**********calculation of possible loan conditions**********");
 
         Client client = Client.builder()
                 .lastName(loanApplicationRequest.getLastName())
@@ -38,6 +42,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         Client saveClient = clientRepository.save(client);
 
+        log.info("**********creating application**********");
         Application application = Application.builder()
                 .client(saveClient)
                 .creationDate(LocalDate.now())

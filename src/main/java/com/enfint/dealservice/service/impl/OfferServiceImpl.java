@@ -8,18 +8,22 @@ import com.enfint.dealservice.repository.ApplicationRepository;
 import com.enfint.dealservice.service.OfferService;
 import com.enfint.dealservice.utils.ApplicationStatusEnum;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OfferServiceImpl implements OfferService {
 
     private final ApplicationRepository applicationRepository;
 
     @Override
     public void updateOffer(LoanOfferDTO loanOffer) {
+
+        log.info("**********Selecting an offer**********");
 
         Application application;
 
